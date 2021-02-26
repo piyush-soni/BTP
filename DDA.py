@@ -1,10 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from numpy import random
+
+# this function will provide all the devices which are in radius less than 2r.
 def find_frnds(i,a):
     pass
-# now find friends of i in a using if dis(i,j belongs to a)<2R
-         
+
+def checkstatus():
+    # ra = random.randint(num_of_devices,size=(5))
+    # for i in ra:
+    #     if(status[i] == 1):
+    #         status[i] = 0
+    #     else:
+    #         status[i] = 1
+    print("enter the device number between 0 to",num_of_devices," and enter the status by 1 or 0 , EG: 1 1 :")
+    n, s = map(int, input().split())
+    status[n] = s
 
 def primes_from_2_to(n):
    
@@ -46,51 +57,28 @@ def halton(dim, n_sample):
 
 num_of_devices = int(input("Number of devices: "))
 GridDimeniton = int(input("Grid dimention :"))
-#print("here the plot will be shown for 2 dimentional devices \n")
-
 a = halton(2, num_of_devices)*GridDimeniton
 
-config_points={}
-
-# initialize the config_points as a int,list map 
-# this will hold the supporting frnds of a particular node
-
+connections = []
 for i in range(num_of_devices):
-    config_points.update({i:[i+0,i+1,i+2]})
-for i in range(num_of_devices):
-    print(config_points[i])
-# run a loop for every point to find its friends
-
-# AFTER the upper loop we will be having a map of int and list showing the point number and its helper
-
-# now if any device gets short we just have to check whether its friends status is 1 or 0 is it is 1 it is helping and if it is 1 then we first find the helpers of that point.
-# then pass it to this function find_helper
+    connections.append([])
 
 x,y,status = [],[],[]
-
 for i in a:
 	x.append(i[0])
 	y.append(i[1])
 	status.append(1)
-def checkstatus():
-    ra = random.randint(num_of_devices,size=(5))
-    for i in ra:
+
+while(True):
+    for i in range(num_of_devices):
+        r = 50
         if(status[i] == 1):
-            status[i] = 0
+            plt.scatter(x[i],y[i],c="c",s=r**2)
+            # plt.scatter(x[i],y[i],c="black")
         else:
-            status[i] = 1
-
-
-# while(True):
-#     for i in range(num_of_devices):
-#         r = 50
-#         if(status[i] == 1):
-#             plt.scatter(x[i],y[i],c="c",s=r**2)
-#             plt.scatter(x[i],y[i],c="black")
-#         else:
-#             plt.scatter(x[i],y[i],c="r")
-#             pass
-#     checkstatus()
-#     plt.draw()
-#     plt.pause(3)
-#     plt.clf()
+            plt.scatter(x[i],y[i],c="r")
+            #pass
+    checkstatus()
+    plt.draw()
+    plt.pause(3)
+    plt.clf()
