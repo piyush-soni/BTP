@@ -80,5 +80,5 @@ while(True):
             #pass
     plt.draw()
     plt.pause(3)
-    plt.clf()
     checkstatus()
+    plt.clf()
