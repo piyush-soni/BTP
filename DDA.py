@@ -78,7 +78,7 @@ while(True):
         else:
             plt.scatter(x[i],y[i],c="r")
             #pass
-    checkstatus()
     plt.draw()
     plt.pause(3)
     plt.clf()
+    checkstatus()
