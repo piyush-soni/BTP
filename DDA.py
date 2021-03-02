@@ -79,7 +79,8 @@ for i in range(num_of_devices):
                 pt2 = np.array((x[v],y[v]))
                 if(np.linalg.norm(pt1 - pt2) <= radius):
                     connections[i].append(v)
-print(connections)
+for i in range(len(connections)):
+    print("Device Number",i,"connections are :",connections[i])
 
 while(True):
     r = 50
