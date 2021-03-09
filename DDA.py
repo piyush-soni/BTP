@@ -7,12 +7,6 @@ def find_frnds(i,a):
     pass
 
 def checkstatus():
-    # ra = random.randint(num_of_devices,size=(5))
-    # for i in ra:
-    #     if(status[i] == 1):
-    #         status[i] = 0
-    #     else:
-    #         status[i] = 1
     print("enter the device number between 0 to",num_of_devices," and enter the status by 1 or 0 , EG: 1 1 :")
     n, s = map(int, input().split())
     if(n > num_of_devices or n<0 or n!=int(n)):
@@ -58,17 +52,22 @@ def halton(dim, n_sample):
 
     return sample
 
+# requesting for all the necessary inputs in the code
 num_of_devices = int(input("Number of devices: "))
 GridDimeniton = int(input("Grid dimention :"))
 a = halton(2, num_of_devices)*GridDimeniton
 
+# splitting the inputs in different variables for better execution
 x,y,status = [],[],[]
 for i in a:
 	x.append(i[0])
 	y.append(i[1])
 	status.append(1)
 
+# predefined radius mentioned here
 radius = 20
+
+# this connections array will be holding the friends for all then nodes
 connections = []
 for i in range(num_of_devices):
     connections.append([])
@@ -79,19 +78,19 @@ for i in range(num_of_devices):
                 pt2 = np.array((x[v],y[v]))
                 if(np.linalg.norm(pt1 - pt2) <= radius):
                     connections[i].append(v)
-for i in range(len(connections)):
-    print("Device Number",i,"connections are :",connections[i])
+
+# for i in range(len(connections)):
+    # print("Device Number",i,"connections are :",connections[i])
 
 while(True):
-    r = 50
-    for i in range(num_of_devices):
-        if(status[i] == 1):
-            plt.scatter(x[i],y[i],c="c",s=r**2)
-            # plt.scatter(x[i],y[i],c="black")
+    ax = plt.gca()
     for i in range(num_of_devices):
         if(status[i] == 0):
-            plt.scatter(x[i],y[i],c="r")
-            #pass
+            ax.add_patch(plt.Circle((x[i],y[i]),radius,color="red"))
+    for i in range(num_of_devices):
+        if(status[i] == 1):
+            ax.add_patch(plt.Circle((x[i],y[i]),radius))
+    plt.axis("scaled")
     plt.draw()
     plt.pause(2)
     checkstatus()
