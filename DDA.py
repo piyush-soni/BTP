@@ -65,7 +65,7 @@ for i in a:
 	status.append(1)
 
 # predefined radius mentioned here
-radius = 20
+radius = 1
 
 # this connections array will be holding the friends for all then nodes
 connections = []
@@ -74,13 +74,13 @@ for i in range(num_of_devices):
     pt1 = np.array((x[i],y[i]))
     for v in range(num_of_devices):
         if(v != i):
-            if(abs(x[i]-x[v])<=radius and abs(y[i]-y[v])<=radius):
+            if(abs(x[i]-x[v]) <= 2*radius and abs(y[i]-y[v]) <= 2*radius):
                 pt2 = np.array((x[v],y[v]))
-                if(np.linalg.norm(pt1 - pt2) <= radius):
+                if(np.linalg.norm(pt1 - pt2) <= 2*radius):
                     connections[i].append(v)
 
-# for i in range(len(connections)):
-    # print("Device Number",i,"connections are :",connections[i])
+for i in range(len(connections)):
+    print("Device Number",i,"connections are :",connections[i])
 
 while(True):
     ax = plt.gca()
