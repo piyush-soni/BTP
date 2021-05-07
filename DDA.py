@@ -65,7 +65,7 @@ for i in a:
 	status.append(1)
 
 # predefined radius mentioned here
-radius = 1
+radius = 5
 
 # this connections array will be holding the friends for all then nodes
 connections = []
