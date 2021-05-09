@@ -2,13 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numpy import random
 
-# this function will provide all the devices which are in radius less than 2r.
-def find_frnds(i,a):
-    pass
-
 def checkstatus():
-    print("enter the device number between 0 to",num_of_devices," and enter the status by 1 or 0 , EG: 1 1 :")
+    print("Enter Device Number [1 to "+str(num_of_devices)+"], Current Status represented by 1 or 0 , EG: 1 0")
     n, s = map(int, input().split())
+    n-=1
     if(n > num_of_devices or n<0 or n!=int(n)):
         print("invalid device number")
     else:
@@ -55,6 +52,7 @@ def halton(dim, n_sample):
 # requesting for all the necessary inputs in the code
 num_of_devices = int(input("Number of devices: "))
 GridDimeniton = int(input("Grid dimention :"))
+radius = int(input("Radius of device :"))
 a = halton(2, num_of_devices)*GridDimeniton
 
 # splitting the inputs in different variables for better execution
@@ -80,7 +78,7 @@ for i in range(num_of_devices):
                     connections[i].append(v)
 
 for i in range(len(connections)):
-    print("Device Number",i,"connections are :",connections[i])
+    print("Device Number",i+1,"connections are :",connections[i])
 
 while(True):
     ax = plt.gca()
