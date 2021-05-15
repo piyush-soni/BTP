@@ -15,9 +15,24 @@ def checkstatus():
     #     status[n] = s
     n = random.randrange(0,num_of_devices)
     s = random.choice([1,1,1,1,0])
+    if(status[n] == s):
+        return False
     status[n] = s
-    print("device",n,"status",s)
-
+    con()
+    print("device",n+1,"status",s)
+    return True
+def con():
+    f = open("Connection-List.txt","w+")
+    f.write("Supporting Device List \n\n")
+    for i in range(num_of_devices):
+        if(status[i] == 1):
+            f.write("Device "+str(i+1)+" =>   ")
+            for v in connections[i]:
+                if(status[v-1] == 1):
+                    f.write(str(v)+" ")
+            f.write("\n")
+        else:
+            f.write("Device "+str(i+1)+" =>   Disconnected \n")
 def primes_from_2_to(n):
    
     sieve = np.ones(n // 3 + (n % 6 == 2), dtype=np.bool)
@@ -72,31 +87,36 @@ f= open("loc.txt","w+")
 for i in range(num_of_devices):
     f.write("Device "+str(i+1)+" Location x="+str(int(x[i]*100)/100)+" y="+str(int(y[i]*100)/100)+"\n")
 f.close()
+
 # this connections array will be holding the friends for all then nodes
-# connections = []
-# for i in range(num_of_devices):
-#     connections.append([])
-#     pt1 = np.array((x[i],y[i]))
-#     for v in range(num_of_devices):
-#         if(v != i):
-#             if(abs(x[i]-x[v]) <= 2*radius and abs(y[i]-y[v]) <= 2*radius):
-#                 pt2 = np.array((x[v],y[v]))
-#                 if(np.linalg.norm(pt1 - pt2) <= 2*radius):
-#                     connections[i].append(v)
+connections = []
+for i in range(num_of_devices):
+    connections.append([])
+for i in range(num_of_devices):
+    pt1 = np.array((x[i],y[i]))
+    for v in range(num_of_devices):
+        if(v != i):
+            if(abs(x[i]-x[v]) <= 2*radius and abs(y[i]-y[v]) <= 2*radius):
+                pt2 = np.array((x[v],y[v]))
+                if(np.linalg.norm(pt1 - pt2) <= 2*radius):
+                    connections[i].append(v+1)
 
-# for i in range(len(connections)):
-#     print("Device Number",i+1,"connections are :",connections[i])
+for i in range(len(connections)):
+    print("Device Number",i+1,"connections are :",connections[i])
+con()
 
+t = True
 while(True):
-    ax = plt.gca()
-    for i in range(num_of_devices):
-        if(status[i] == 0):
-            ax.add_patch(plt.Circle((x[i],y[i]),radius,color="red"))
-    for i in range(num_of_devices):
-        if(status[i] == 1):
-            ax.add_patch(plt.Circle((x[i],y[i]),radius))
-    plt.axis("scaled")
-    plt.draw()
+    if(t):
+        plt.clf()
+        ax = plt.gca()
+        for i in range(num_of_devices):
+            if(status[i] == 0):
+                ax.add_patch(plt.Circle((x[i],y[i]),radius,color="red"))
+        for i in range(num_of_devices):
+            if(status[i] == 1):
+                ax.add_patch(plt.Circle((x[i],y[i]),radius))
+        plt.axis("scaled")
+        plt.draw()
     plt.pause(2)
-    checkstatus()
-    plt.clf()
+    t = checkstatus()

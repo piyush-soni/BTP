@@ -8,8 +8,3 @@ Device 7 Location x=17.5 y=11.11
 Device 8 Location x=1.25 y=17.77
 Device 9 Location x=11.25 y=0.74
 Device 10 Location x=6.25 y=7.4
-Device 11 Location x=16.25 y=14.07
-Device 12 Location x=3.75 y=2.96
-Device 13 Location x=13.75 y=9.62
-Device 14 Location x=8.75 y=16.29
-Device 15 Location x=18.75 y=5.18
