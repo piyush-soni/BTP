@@ -56,11 +56,6 @@ m2 = max(y)
 cou = 0
 xval = []
 yval = []
-# for i in range(num_of_devices):
-#     plt.figure(figsize=(m1, m2))
-#     plt.pause(1)
-#     plt.clf()
-#     cou+=1
 
 def animate(i):
     global cou

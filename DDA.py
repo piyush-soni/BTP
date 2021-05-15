@@ -2,12 +2,11 @@ import time
 import random
 import numpy as np
 import pandas as pd
-# from itertools import count
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 
+plt.style.use('seaborn')
 def checkstatus():
-    print("Enter Device Number [1 to "+str(num_of_devices)+"], Current Status represented by 1 or 0 , EG: 1 0")
+    print("Enter device number, current status")
     n, s = map(int, input().split())
     n-=1
     if(n > num_of_devices or n<0 or n!=int(n)):
@@ -79,32 +78,16 @@ for i in a:
 # for i in range(len(connections)):
 #     print("Device Number",i+1,"connections are :",connections[i])
 
-# sequential print
-# def animate():
-#     ax = plt.gca()
-#     ax.add_patch(plt.Circle(()))
-
-# ani = FuncAnimation(plt.gcf(), animate, interval=300)
-for i in range(num_of_devices):
+while(True):
     ax = plt.gca()
-    for v in range(i):
-        ax.add_patch(plt.Circle((x[i],y[i]),radius))
+    for i in range(num_of_devices):
+        if(status[i] == 0):
+            ax.add_patch(plt.Circle((x[i],y[i]),radius,color="red"))
+    for i in range(num_of_devices):
+        if(status[i] == 1):
+            ax.add_patch(plt.Circle((x[i],y[i]),radius))
     plt.axis("scaled")
     plt.draw()
     plt.pause(2)
+    checkstatus()
     plt.clf()
-
-
-# while(True):
-#     ax = plt.gca()
-#     for i in range(num_of_devices):
-#         if(status[i] == 0):
-#             ax.add_patch(plt.Circle((x[i],y[i]),radius,color="red"))
-#     for i in range(num_of_devices):
-#         if(status[i] == 1):
-#             ax.add_patch(plt.Circle((x[i],y[i]),radius))
-#     plt.axis("scaled")
-#     plt.draw()
-#     plt.pause(2)
-#     checkstatus()
-#     plt.clf()
