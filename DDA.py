@@ -67,6 +67,11 @@ for i in a:
 	y.append(i[1])
 	status.append(1)
 
+# adding device location to loc.txt
+f= open("loc.txt","w+")
+for i in range(num_of_devices):
+    f.write("Device "+str(i+1)+" Location x="+str(int(x[i]*100)/100)+" y="+str(int(y[i]*100)/100)+"\n")
+f.close()
 # this connections array will be holding the friends for all then nodes
 # connections = []
 # for i in range(num_of_devices):
