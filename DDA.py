@@ -6,13 +6,17 @@ import matplotlib.pyplot as plt
 
 plt.style.use('seaborn')
 def checkstatus():
-    print("Enter device number, current status")
-    n, s = map(int, input().split())
-    n-=1
-    if(n > num_of_devices or n<0 or n!=int(n)):
-        print("invalid device number")
-    else:
-        status[n] = s
+    # print("Enter device number, current status")
+    # n, s = map(int, input().split())
+    # n-=1
+    # if(n > num_of_devices or n<0 or n!=int(n)):
+    #     print("invalid device number")
+    # else:
+    #     status[n] = s
+    n = random.randrange(0,num_of_devices)
+    s = random.choice([1,1,1,1,0])
+    status[n] = s
+    print("device",n,"status",s)
 
 def primes_from_2_to(n):
    
