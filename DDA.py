@@ -27,12 +27,12 @@ def con():
     for i in range(num_of_devices):
         if(status[i] == 1):
             f.write("Device "+str(i+1)+" =>   ")
-            for v in connections[i]:
-                if(status[v-1] == 1):
-                    f.write(str(v)+" ")
-            f.write("\n")
         else:
-            f.write("Device "+str(i+1)+" =>   Disconnected \n")
+            f.write("Device "+str(i+1)+" =>   Disconnected =>  ")
+        for v in connections[i]:
+            if(status[v-1] == 1):
+                f.write(str(v)+" ")
+        f.write("\n")
 def primes_from_2_to(n):
    
     sieve = np.ones(n // 3 + (n % 6 == 2), dtype=np.bool)
