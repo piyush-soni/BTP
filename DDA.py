@@ -6,13 +6,6 @@ import matplotlib.pyplot as plt
 
 plt.style.use('seaborn')
 def checkstatus():
-    # print("Enter device number, current status")
-    # n, s = map(int, input().split())
-    # n-=1
-    # if(n > num_of_devices or n<0 or n!=int(n)):
-    #     print("invalid device number")
-    # else:
-    #     status[n] = s
     n = random.randrange(0,num_of_devices)
     s = random.choice([1,1,1,1,0])
     if(status[n] == s):
@@ -28,65 +21,27 @@ def con():
         if(status[i] == 1):
             f.write("Device "+str(i+1)+" =>   ")
         else:
-            f.write("Device "+str(i+1)+" =>   Disconnected =>  ")
+            f.write("Device "+str(i+1)+" =>   Disconnected \n")
+            continue
         for v in connections[i]:
             if(status[v-1] == 1):
                 f.write(str(v)+" ")
         f.write("\n")
-def primes_from_2_to(n):
-   
-    sieve = np.ones(n // 3 + (n % 6 == 2), dtype=np.bool)
-    for i in range(1, int(n ** 0.5) // 3 + 1):
-        if sieve[i]:
-            k = 3 * i + 1 | 1
-            sieve[k * k // 3::2 * k] = False
-            sieve[k * (k - 2 * (i & 1) + 4) // 3::2 * k] = False
-    return np.r_[2, 3, ((3 * np.nonzero(sieve)[0][1:] + 1) | 1)]
-def van_der_corput(n_sample, base=2):
-    
-    sequence = []
-    for i in range(n_sample):
-        n_th_number, denom = 0., 1.
-        while i > 0:
-            i, remainder = divmod(i, base)
-            denom *= base
-            n_th_number += remainder / denom
-        sequence.append(n_th_number)
+    f.close()
 
-    return sequence
-def halton(dim, n_sample):
-
-    big_number = 10
-    while 'Not enought primes':
-        base = primes_from_2_to(big_number)[:dim]
-        if len(base) == dim:
-            break
-        big_number += 1000
-
-    # Generate a sample using a Van der Corput sequence per dimension.
-    sample = [van_der_corput(n_sample + 1, dim) for dim in base]
-    sample = np.stack(sample, axis=-1)[1:]
-
-    return sample
-
-# requesting for all the necessary inputs in the code
-num_of_devices = int(input("Number of devices: "))
-GridDimeniton = int(input("Grid dimention :"))
-radius = int(input("Radius of device :"))
-a = halton(2, num_of_devices)*GridDimeniton
-
-# splitting the inputs in different variables for better execution
-x,y,status = [],[],[]
-for i in a:
-	x.append(i[0])
-	y.append(i[1])
-	status.append(1)
-
-# adding device location to loc.txt
-f= open("loc.txt","w+")
-for i in range(num_of_devices):
-    f.write("Device "+str(i+1)+" Location x="+str(int(x[i]*100)/100)+" y="+str(int(y[i]*100)/100)+"\n")
-f.close()
+f = open("current-device-location-list.txt","r")
+l = f.readlines()
+radius, num_of_devices, GridDimeniton = map(int, l[0].split(","))
+temp = True
+x, y, status = [], [], []
+for i in l:
+    if temp:
+        temp = not temp
+        continue
+    temp1, temp2 = i.split(",")
+    x.append(float(temp1))
+    y.append(float(temp2[:-1]))
+    status.append(1)
 
 # this connections array will be holding the friends for all then nodes
 connections = []
