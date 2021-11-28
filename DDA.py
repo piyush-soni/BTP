@@ -51,7 +51,7 @@ def checkstatus():
         return True
     n = random.randrange(0,num_of_devices)
     s = random.choice([1,1,1,1,0])
-    if(status[n] == s):
+    if(status[n] == s or status[n] == 0):
         return False
     status[n] = s
     writedata()
