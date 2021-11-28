@@ -4,67 +4,74 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-plt.style.use('seaborn')
+def readdata():
+    global radius
+    global num_of_devices
+    global GridDimeniton
+    global redplynum
+    x, y, status = [], [], []
+    f = open("live-status.txt","r")
+    l = f.readlines()
+    temp = True
+    radius, num_of_devices, GridDimeniton, redplynum = map(int, l[0].split(","))
+    for i in l:
+        if temp:
+            temp = not temp
+            continue
+        temp1, temp2, e = i.split(",")
+        x.append(float(temp1))
+        y.append(float(temp2[:-1]))
+        status.append(int(e))
+    f.close()
+def writedata():
+    global radius
+    global num_of_devices
+    global GridDimeniton
+    global redplynum
+    f = open("live-status.txt","w+")
+    f.write(str(radius)+","+str(num_of_devices)+","+str(GridDimeniton)+","+str(redplynum)+"\n")
+    for i in range(num_of_devices):
+        f.write(str(int(x[i]*100)/100)+","+str(int(y[i]*100)/100)+","+str(status[i])+"\n")
+    f.close()
 def checkstatus():
+    f = open("live-status.txt","r")
+    l = f.readline()
+    temp3 = int(l.split(",")[-1])
+    f.close()
+    if redplynum != temp3:
+        readdata()
     n = random.randrange(0,num_of_devices)
     s = random.choice([1,1,1,1,0])
     if(status[n] == s):
         return False
     status[n] = s
-    con()
+    writedata()
     print("device",n+1,"status",s)
     return True
-def con():
-    f = open("Connection-List.txt","w+")
-    f.write("Supporting Device List \n\n")
-    for i in range(num_of_devices):
-        if(status[i] == 1):
-            f.write("Device "+str(i+1)+" =>   ")
-        else:
-            f.write("Device "+str(i+1)+" =>   Disconnected \n")
-            continue
-        for v in connections[i]:
-            if(status[v-1] == 1):
-                f.write(str(v)+" ")
-        f.write("\n")
-    f.close()
 
-f = open("current-device-location-list.txt","r")
+x, y, status, temp, t = [], [], [], True, True
+
+plt.style.use('seaborn')
+f = open("live-status.txt","r")
 l = f.readlines()
-radius, num_of_devices, GridDimeniton = map(int, l[0].split(","))
-temp = True
-x, y, status = [], [], []
+radius, num_of_devices, GridDimeniton, redplynum = map(int, l[0].split(","))
 for i in l:
     if temp:
         temp = not temp
         continue
-    temp1, temp2 = i.split(",")
+    temp1, temp2, e = i.split(",")
     x.append(float(temp1))
-    y.append(float(temp2[:-1]))
-    status.append(1)
+    y.append(float(temp2))
+    status.append(int(e))
+f.close()
 
-# this connections array will be holding the friends for all then nodes
-connections = []
-for i in range(num_of_devices):
-    connections.append([])
-for i in range(num_of_devices):
-    pt1 = np.array((x[i],y[i]))
-    for v in range(num_of_devices):
-        if(v != i):
-            if(abs(x[i]-x[v]) <= 2*radius and abs(y[i]-y[v]) <= 2*radius):
-                pt2 = np.array((x[v],y[v]))
-                if(np.linalg.norm(pt1 - pt2) <= 2*radius):
-                    connections[i].append(v+1)
-
-for i in range(len(connections)):
-    print("Device Number",i+1,"connections are :",connections[i])
-con()
-
-t = True
 while(True):
     if(t):
         plt.clf()
         ax = plt.gca()
+        for i in range(num_of_devices):
+            if(status[i] == 2):
+                ax.add_patch(plt.Circle((x[i],y[i]),radius,color="orange"))
         for i in range(num_of_devices):
             if(status[i] == 0):
                 ax.add_patch(plt.Circle((x[i],y[i]),radius,color="red"))

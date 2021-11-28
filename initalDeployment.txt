@@ -1,4 +1,4 @@
-Device Radius = 6
+Device Radius = 15
 Device 1 Location x=100.0 y=66.66
 Device 2 Location x=50.0 y=133.33
 Device 3 Location x=150.0 y=22.22

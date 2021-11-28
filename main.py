@@ -58,8 +58,8 @@ for i in range(num_of_devices):
 	f.write("Device "+str(i+1)+" Location x="+str(int(x[i]*100)/100)+" y="+str(int(y[i]*100)/100)+"\n")
 f.close()
 
-f = open("current-device-location-list.txt","w+")
-f.write(str(radius)+","+str(num_of_devices)+","+str(GridDimeniton)+"\n")
+f = open("live-status.txt","w+")
+f.write(str(radius)+","+str(num_of_devices)+","+str(GridDimeniton)+",0"+"\n")
 for i in range(num_of_devices):
-    f.write(str(int(x[i]*100)/100)+","+str(int(y[i]*100)/100)+"\n")
+    f.write(str(int(x[i]*100)/100)+","+str(int(y[i]*100)/100)+",1\n")
 f.close()
