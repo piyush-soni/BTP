@@ -9,6 +9,9 @@ def readdata():
     global num_of_devices
     global GridDimeniton
     global redplynum
+    global x
+    global y
+    global status
     x, y, status = [], [], []
     f = open("live-status.txt","r")
     l = f.readlines()
@@ -20,7 +23,7 @@ def readdata():
             continue
         temp1, temp2, e = i.split(",")
         x.append(float(temp1))
-        y.append(float(temp2[:-1]))
+        y.append(float(temp2))
         status.append(int(e))
     f.close()
 def writedata():
@@ -28,18 +31,24 @@ def writedata():
     global num_of_devices
     global GridDimeniton
     global redplynum
+    global x
+    global y
+    global status
     f = open("live-status.txt","w+")
     f.write(str(radius)+","+str(num_of_devices)+","+str(GridDimeniton)+","+str(redplynum)+"\n")
     for i in range(num_of_devices):
         f.write(str(int(x[i]*100)/100)+","+str(int(y[i]*100)/100)+","+str(status[i])+"\n")
     f.close()
 def checkstatus():
+    global redplynum
     f = open("live-status.txt","r")
     l = f.readline()
     temp3 = int(l.split(",")[-1])
     f.close()
     if redplynum != temp3:
+        redplynum = temp3
         readdata()
+        return True
     n = random.randrange(0,num_of_devices)
     s = random.choice([1,1,1,1,0])
     if(status[n] == s):
